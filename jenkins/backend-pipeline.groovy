@@ -137,7 +137,6 @@ pipeline {
                         def public2 = sh(script: "aws cloudformation describe-stacks --stack-name ${env.VPC_STACK_NAME} --query \"Stacks[0].Outputs[?OutputKey=='PublicSubnet2'].OutputValue\" --output text", returnStdout: true).trim()
                         def backend_sg = sh(script: "aws cloudformation describe-stacks --stack-name ${env.SG_STACK_NAME} --query \"Stacks[0].Outputs[?OutputKey=='BackendSecurityGroupId'].OutputValue\" --output text", returnStdout: true).trim()
                         def target_arn = sh(script: "aws cloudformation describe-stacks --stack-name ${env.ALB_STACK_NAME} --query \"Stacks[0].Outputs[?OutputKey=='TargetGroupArn'].OutputValue\" --output text", returnStdout: true).trim()
-                        // def rds_host = sh(script: "aws cloudformation describe-stacks --stack-name ${env.RDS_STACK_NAME} --query \"Stacks[0].Outputs[?OutputKey=='DBEndpoint'].OutputValue\" --output text", returnStdout: true).trim()
                         def vpc_id = sh(script: "aws cloudformation describe-stacks --stack-name ${env.VPC_STACK_NAME} --query \"Stacks[0].Outputs[?OutputKey=='VPCId'].OutputValue\" --output text", returnStdout: true).trim()
 
                         def ecr_repo_uri = sh(script: "aws cloudformation describe-stacks --stack-name ${env.ECR_STACK_NAME} --query \"Stacks[0].Outputs[?OutputKey=='ECRRepoURI'].OutputValue\" --output text", returnStdout: true).trim()
