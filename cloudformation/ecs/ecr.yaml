@@ -1,0 +1,31 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Create ECR Repository for backend application
+
+Parameters:
+  Environment:
+    Type: String
+    Description: Deployment environment (e.g., dev, staging, prod)
+
+Resources:
+  BackendECRRepo:
+    Type: AWS::ECR::Repository
+    Properties:
+      RepositoryName: !Sub "${Environment}-backend-repo"
+      ImageScanningConfiguration:
+        scanOnPush: true
+      Tags:
+        - Key: Name
+          Value: !Sub "${Environment}-backend-ecr"
+
+Outputs:
+  ECRRepoName:
+    Description: Name of the ECR repository
+    Value: !Ref BackendECRRepo
+    Export:
+      Name: !Sub "${Environment}-ECRRepoName"
+
+  ECRRepoURI:
+    Description: URI of the ECR repository
+    Value: !GetAtt BackendECRRepo.RepositoryUri
+    Export:
+      Name: !Sub "${Environment}-ECRRepoURI"
