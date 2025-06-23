@@ -22,15 +22,15 @@ Parameters:
     Default: backend-app
   ImageUrl:
     Type: String
-  DBName:
-    Type: String
-  DBUser:
-    Type: String
-  DBPass:
-    Type: String
-    NoEcho: true
-  DBHost:
-    Type: String
+  # DBName:
+  #   Type: String
+  # DBUser:
+  #   Type: String
+  # DBPass:
+  #   Type: String
+  #   NoEcho: true
+  # DBHost:
+  #   Type: String
 
 Resources:
 
@@ -84,15 +84,15 @@ Resources:
               awslogs-group: ecs-logs
               awslogs-region: us-east-1
               awslogs-stream-prefix: ecs
-          Environment:
-            - Name: DB_NAME
-              Value: !Ref DBName
-            - Name: DB_USER
-              Value: !Ref DBUser
-            - Name: DB_PASS
-              Value: !Ref DBPass
-            - Name: DB_HOST
-              Value: !Ref DBHost
+          # Environment:
+          #   - Name: DB_NAME
+          #     Value: !Ref DBName
+          #   - Name: DB_USER
+          #     Value: !Ref DBUser
+          #   - Name: DB_PASS
+          #     Value: !Ref DBPass
+          #   - Name: DB_HOST
+          #     Value: !Ref DBHost
           Essential: true
 
   ECSService:

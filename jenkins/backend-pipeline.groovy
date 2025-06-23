@@ -68,35 +68,35 @@ pipeline {
             }
         }
 
-        stage('Deploy RDS') {
-            steps {
-                dir('cloudformation/rds/') {
-                    script {
-                        def private1 = sh(script: "aws cloudformation describe-stacks --stack-name ${env.VPC_STACK_NAME} --query \"Stacks[0].Outputs[?OutputKey=='PrivateSubnet1'].OutputValue\" --output text", returnStdout: true).trim()
-                        def private2 = sh(script: "aws cloudformation describe-stacks --stack-name ${env.VPC_STACK_NAME} --query \"Stacks[0].Outputs[?OutputKey=='PrivateSubnet2'].OutputValue\" --output text", returnStdout: true).trim()
-                        def rds_sg = sh(script: "aws cloudformation describe-stacks --stack-name ${env.SG_STACK_NAME} --query \"Stacks[0].Outputs[?OutputKey=='RDSSecurityGroupId'].OutputValue\" --output text", returnStdout: true).trim()
-                        def vpc_id = sh(script: "aws cloudformation describe-stacks --stack-name ${env.VPC_STACK_NAME} --query \"Stacks[0].Outputs[?OutputKey=='VPCId'].OutputValue\" --output text", returnStdout: true).trim()
+        // stage('Deploy RDS') {
+        //     steps {
+        //         dir('cloudformation/rds/') {
+        //             script {
+        //                 def private1 = sh(script: "aws cloudformation describe-stacks --stack-name ${env.VPC_STACK_NAME} --query \"Stacks[0].Outputs[?OutputKey=='PrivateSubnet1'].OutputValue\" --output text", returnStdout: true).trim()
+        //                 def private2 = sh(script: "aws cloudformation describe-stacks --stack-name ${env.VPC_STACK_NAME} --query \"Stacks[0].Outputs[?OutputKey=='PrivateSubnet2'].OutputValue\" --output text", returnStdout: true).trim()
+        //                 def rds_sg = sh(script: "aws cloudformation describe-stacks --stack-name ${env.SG_STACK_NAME} --query \"Stacks[0].Outputs[?OutputKey=='RDSSecurityGroupId'].OutputValue\" --output text", returnStdout: true).trim()
+        //                 def vpc_id = sh(script: "aws cloudformation describe-stacks --stack-name ${env.VPC_STACK_NAME} --query \"Stacks[0].Outputs[?OutputKey=='VPCId'].OutputValue\" --output text", returnStdout: true).trim()
 
-                        sh """
-                        aws cloudformation deploy \
-                          --template-file db.yaml \
-                          --stack-name ${env.RDS_STACK_NAME} \
-                          --region ${env.AWS_DEFAULT_REGION} \
-                          --capabilities CAPABILITY_NAMED_IAM \
-                          --parameter-overrides \
-                              Environment=${params.ENVIRONMENT} \
-                              VPCId=${vpc_id} \
-                              PrivateSubnet1=${private1} \
-                              PrivateSubnet2=${private2} \
-                              RDSSecurityGroup=${rds_sg} \
-                              DBUser=admin \
-                              DBPassword=${params.DB_PASS} \
-                              DBName=povomah
-                        """
-                    }
-                }
-            }
-        }
+        //                 sh """
+        //                 aws cloudformation deploy \
+        //                   --template-file db.yaml \
+        //                   --stack-name ${env.RDS_STACK_NAME} \
+        //                   --region ${env.AWS_DEFAULT_REGION} \
+        //                   --capabilities CAPABILITY_NAMED_IAM \
+        //                   --parameter-overrides \
+        //                       Environment=${params.ENVIRONMENT} \
+        //                       VPCId=${vpc_id} \
+        //                       PrivateSubnet1=${private1} \
+        //                       PrivateSubnet2=${private2} \
+        //                       RDSSecurityGroup=${rds_sg} \
+        //                       DBUser=admin \
+        //                       DBPassword=${params.DB_PASS} \
+        //                       DBName=povomah
+        //                 """
+        //             }
+        //         }
+        //     }
+        // }
 
         stage('Deploy ECR') {
             steps {
@@ -168,7 +168,7 @@ pipeline {
                         def public2 = sh(script: "aws cloudformation describe-stacks --stack-name ${env.VPC_STACK_NAME} --query \"Stacks[0].Outputs[?OutputKey=='PublicSubnet2'].OutputValue\" --output text", returnStdout: true).trim()
                         def backend_sg = sh(script: "aws cloudformation describe-stacks --stack-name ${env.SG_STACK_NAME} --query \"Stacks[0].Outputs[?OutputKey=='BackendSecurityGroupId'].OutputValue\" --output text", returnStdout: true).trim()
                         def target_arn = sh(script: "aws cloudformation describe-stacks --stack-name ${env.ALB_STACK_NAME} --query \"Stacks[0].Outputs[?OutputKey=='TargetGroupArn'].OutputValue\" --output text", returnStdout: true).trim()
-                        def rds_host = sh(script: "aws cloudformation describe-stacks --stack-name ${env.RDS_STACK_NAME} --query \"Stacks[0].Outputs[?OutputKey=='DBEndpoint'].OutputValue\" --output text", returnStdout: true).trim()
+                        // def rds_host = sh(script: "aws cloudformation describe-stacks --stack-name ${env.RDS_STACK_NAME} --query \"Stacks[0].Outputs[?OutputKey=='DBEndpoint'].OutputValue\" --output text", returnStdout: true).trim()
                         def vpc_id = sh(script: "aws cloudformation describe-stacks --stack-name ${env.VPC_STACK_NAME} --query \"Stacks[0].Outputs[?OutputKey=='VPCId'].OutputValue\" --output text", returnStdout: true).trim()
 
                         def ecr_repo_uri = sh(script: "aws cloudformation describe-stacks --stack-name ${env.ECR_STACK_NAME} --query \"Stacks[0].Outputs[?OutputKey=='ECRRepoURI'].OutputValue\" --output text", returnStdout: true).trim()
@@ -189,10 +189,10 @@ pipeline {
                               ClusterName=${env.CLUSTER_NAME} \
                               ContainerName=${env.CONTAINER_NAME} \
                               ImageUrl=${ecr_repo_uri}:latest-1 \
-                              DBName=povomah \
-                              DBUser=admin \
-                              DBPass=${params.DB_PASS} \
-                              DBHost=${rds_host}
+                            //   DBName=povomah \
+                            //   DBUser=admin \
+                            //   DBPass=${params.DB_PASS} \
+                            //   DBHost=${rds_host}
                         """
                     }
                 }
