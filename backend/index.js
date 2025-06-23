@@ -10,6 +10,10 @@ const app = express();
 app.use(RequestLogger('dev'));
 app.use(Cors());
 
+app.get('/healthCheck', (req, res) => {
+  res.status(200).send('OK');
+})
+
 // Apollo GraphQL setup
 const typeDefs = gql`
   type StatusResponse {

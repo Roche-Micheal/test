@@ -3,7 +3,7 @@ import { HttpLink } from 'apollo-angular/http';
 import { NgModule } from '@angular/core';
 import { ApolloClientOptions, InMemoryCache } from '@apollo/client/core';
 
-const uri = 'https://17vbjjkv-8080.inc1.devtunnels.ms/graphql'; // <-- add the URL of the GraphQL server here
+const uri = 'api.rochedev.info/graphql'; // <-- add the URL of the GraphQL server here
 export function createApollo(httpLink: HttpLink): ApolloClientOptions<any> {
   return {
     link: httpLink.create({ uri }),
