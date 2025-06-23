@@ -7,7 +7,6 @@ pipeline {
 
     parameters {
         string(name: 'ENVIRONMENT', defaultValue: 'dev', description: 'Deployment environment')
-        string(name: 'DB_PASS', defaultValue: 'roche938435', description: 'Database password')
         string(name: 'ACM_ARN', defaultValue: '', description: 'ACM Certificate ARN for HTTPS (e.g., api.rochedev.info)')
     }
 
@@ -67,36 +66,6 @@ pipeline {
                 }
             }
         }
-
-        // stage('Deploy RDS') {
-        //     steps {
-        //         dir('cloudformation/rds/') {
-        //             script {
-        //                 def private1 = sh(script: "aws cloudformation describe-stacks --stack-name ${env.VPC_STACK_NAME} --query \"Stacks[0].Outputs[?OutputKey=='PrivateSubnet1'].OutputValue\" --output text", returnStdout: true).trim()
-        //                 def private2 = sh(script: "aws cloudformation describe-stacks --stack-name ${env.VPC_STACK_NAME} --query \"Stacks[0].Outputs[?OutputKey=='PrivateSubnet2'].OutputValue\" --output text", returnStdout: true).trim()
-        //                 def rds_sg = sh(script: "aws cloudformation describe-stacks --stack-name ${env.SG_STACK_NAME} --query \"Stacks[0].Outputs[?OutputKey=='RDSSecurityGroupId'].OutputValue\" --output text", returnStdout: true).trim()
-        //                 def vpc_id = sh(script: "aws cloudformation describe-stacks --stack-name ${env.VPC_STACK_NAME} --query \"Stacks[0].Outputs[?OutputKey=='VPCId'].OutputValue\" --output text", returnStdout: true).trim()
-
-        //                 sh """
-        //                 aws cloudformation deploy \
-        //                   --template-file db.yaml \
-        //                   --stack-name ${env.RDS_STACK_NAME} \
-        //                   --region ${env.AWS_DEFAULT_REGION} \
-        //                   --capabilities CAPABILITY_NAMED_IAM \
-        //                   --parameter-overrides \
-        //                       Environment=${params.ENVIRONMENT} \
-        //                       VPCId=${vpc_id} \
-        //                       PrivateSubnet1=${private1} \
-        //                       PrivateSubnet2=${private2} \
-        //                       RDSSecurityGroup=${rds_sg} \
-        //                       DBUser=admin \
-        //                       DBPassword=${params.DB_PASS} \
-        //                       DBName=povomah
-        //                 """
-        //             }
-        //         }
-        //     }
-        // }
 
         stage('Deploy ECR') {
             steps {
