@@ -188,11 +188,7 @@ pipeline {
                               TargetGroupArn=${target_arn} \
                               ClusterName=${env.CLUSTER_NAME} \
                               ContainerName=${env.CONTAINER_NAME} \
-                              ImageUrl=${ecr_repo_uri}:latest-1 \
-                            //   DBName=povomah \
-                            //   DBUser=admin \
-                            //   DBPass=${params.DB_PASS} \
-                            //   DBHost=${rds_host}
+                              ImageUrl=${ecr_repo_uri}:latest-1
                         """
                     }
                 }
