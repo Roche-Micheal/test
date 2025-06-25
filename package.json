@@ -1,0 +1,47 @@
+{
+  "name": "basic",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon ./bin/www",
+    "jest": "jest --runInBand --coverage --detectOpenHandles"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "axios": "^1.8.4",
+    "bcryptjs": "^3.0.1",
+    "body-parser": "^1.20.3",
+    "cors": "^2.8.5",
+    "crypto": "^1.0.1",
+    "crypto-js": "^4.2.0",
+    "debug": "~2.6.9",
+    "dotenv": "^16.4.7",
+    "error": "^10.4.0",
+    "express": "^4.21.2",
+    "express-rate-limit": "^7.5.0",
+    "graphql": "^16.10.0",
+    "http-errors": "~1.6.3",
+    "https": "^1.0.0",
+    "joi": "^17.13.3",
+    "jsonwebtoken": "^9.0.2",
+    "logger": "^0.0.1",
+    "moment-timezone": "^0.5.48",
+    "mysql2": "^3.12.0",
+    "node-cron": "^3.0.3",
+    "nodemailer": "^6.10.0",
+    "nodemon": "^3.1.9",
+    "parse": "^5.3.0",
+    "parse-error": "^0.2.0",
+    "passport": "^0.7.0",
+    "passport-jwt": "^4.0.1",
+    "rand-token": "^1.0.1",
+    "sequelize": "^6.37.5",
+    "winston": "^3.17.0"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
+}
